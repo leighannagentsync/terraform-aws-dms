@@ -298,8 +298,8 @@ resource "aws_dms_replication_task" "this" {
   replication_task_id       = each.value.replication_task_id
   replication_task_settings = lookup(each.value, "replication_task_settings", null)
   table_mappings            = lookup(each.value, "table_mappings", null)
-  source_endpoint_arn       = each.value.source_endpoint_arn
-  target_endpoint_arn       = each.value.target_endpoint_arn
+  source_endpoint_arn       = aws_dms_endpoint.this[each.value.source_endpoint_key].endpoint_arn
+  target_endpoint_arn       = aws_dms_endpoint.this[each.value.target_endpoint_key].endpoint_arn
   start_replication_task    = lookup(each.value, "start_replication_task", null)
 
   tags = merge(var.tags, lookup(each.value, "tags", {}))
